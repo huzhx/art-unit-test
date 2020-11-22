@@ -5,6 +5,17 @@ class LogAnalyzer {
   /** @private {boolean} */
   wasLastFileNameValid_;
 
+  /** @private {!ExtensionManager} */
+  manager_;
+
+  /**
+   * Inject an extension manager
+   * @param {!ExtensionManager} extensionManager
+   */
+  constructor(extensionManager) {
+    this.manager_ = extensionManager;
+  }
+
   get wasLastFileNameValid() {
     return this.wasLastFileNameValid_;
   }
@@ -14,15 +25,7 @@ class LogAnalyzer {
    * @param {string} fileName
    */
   isValidLogFileName(fileName) {
-    this.wasLastFileNameValid_ = false;
-    if (!fileName || fileName.length === 0) {
-      throw new Error('fileName has to be provided!');
-    }
-    if (!fileName.toUpperCase().endsWith('.SLF')) {
-      return false;
-    }
-    this.wasLastFileNameValid_ = true;
-    return true;
+    return this.manager_.isValid(fileName);
   }
 }
 

@@ -1,8 +1,9 @@
 const LogAnalyzer = require('./log-analyzer');
+const AlwaysTrueFakeExtensionManager = require('./always-true-fake-extension-manager');
 
 test('test isValidLogFileName()', () => {
-  const la = new LogAnalyzer();
-  la.isValidLogFileName('badname.foo');
-  const result = la.wasLastFileNameValid;
-  expect(result).toBeFalsy();
+  const fakeExtensionManager = new AlwaysTrueFakeExtensionManager();
+  const la = new LogAnalyzer(fakeExtensionManager);
+  const result = la.isValidLogFileName('short.ext');
+  expect(result).toBeTruthy();
 });
